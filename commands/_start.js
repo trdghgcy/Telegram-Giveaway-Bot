@@ -16,23 +16,26 @@
   group: 
 CMD*/
 
-var adm = Bot.getProperty("adminID")
+var adm = Bot.getProperty("adminID");
 if (!adm) {
-  Bot.sendMessage(
-    "*😣 No Admin In This Bot\n\n Search For Command* `/loginme` *Then Change Your TG Id There.*"
-  )
-  return
+  Bot.sendMessage("*😣 No Admin In This Bot\n\n Search For Command* `/loginme` *Then Change Your TG Id There.*");
+  return;
 }
 
-var email = User.getProperty("mail", "❌ Not Set")
+var email = User.getProperty("mail", "❌ Not Set");
+var version = "1.0.0"; // Add version variable
 
 var but = [
   [
     { text: "📧 Set BB Mail", callback_data: "/setmail" },
-    { text: "📩 Change BB Mail", callback_data: "/changeemail" }
+    { text: "📩 Change BB Mail", callback_data: "/changeemail" },
   ],
-  [{ text: "🚀 Open Bot Store", callback_data: "/botpanel" }]
-]
+  [
+    { text: "🚀 Open Bot Store", callback_data: "/botpanel" },
+    { text: `v${version}`, callback_data: "version" }, // Add version button
+  ],
+];
+
 var cap =
   "<b>👋🏻 Hi <a href='tg://user?id=" +
   user.telegramid +
@@ -40,32 +43,34 @@ var cap =
   user.first_name +
   "</a>!\n\n❯ Welcome To Our Giveaway Bot.\n\nYour Set Email Is : </b><code>" +
   email +
-  "</code>"
+  "</code>";
+
 if (request.message_id) {
   Api.sendVideo({
     video: "https://t.me/ghgfhkkj/88",
     caption: cap,
     reply_markup: { inline_keyboard: but },
-    parse_mode: "HTML"
-  })
-  return
+    parse_mode: "HTML",
+  });
+  return;
 }
+
 Api.editMessageMedia({
   message_id: request.message.message_id,
   media: {
     type: "video",
     media: "https://t.me/ghgfhkkj/88",
     parse_mode: "HTML",
-    caption: cap
+    caption: cap,
   },
-  reply_markup: { inline_keyboard: but }
-})
+  reply_markup: { inline_keyboard: but },
+});
 
-var hh = ""
+var hh = "";
 if (!User.getProperty("UserDone")) {
-  User.setProperty("UserDone", true, "boolean")
-  var statss = Libs.ResourcesLib.anotherChatRes("status", "global")
-  statss.add(1)
+  User.setProperty("UserDone", true, "boolean");
+  var statss = Libs.ResourcesLib.anotherChatRes("status", "global");
+  statss.add(1);
   Api.sendMessage({
     chat_id: adm,
     text:
@@ -81,7 +86,7 @@ if (!User.getProperty("UserDone")) {
       statss.value() +
       "</b>",
     parse_mode: "html",
-    disable_web_page_preview: true
-  })
-}
-
+    disable_web_page_preview: true,
+  });
+  }
+    
